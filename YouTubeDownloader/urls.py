@@ -25,5 +25,7 @@ urlpatterns = [
 ]
 
 htmx_patterns = [
-    path("get-streams",get_streams,name="get=streams")
+    path("get-streams",get_streams,name="get_streams")
 ]
+
+urlpatterns += htmx_patterns
