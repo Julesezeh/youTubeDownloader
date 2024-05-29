@@ -1,8 +1,27 @@
 <div class="container">
     <div class="streams">
         <img width="80px" height="80px"  src="{{stream_image}}" alt="image">
-        {% for stream in streams %}
-
-        {% endfor %}
+        {% for link in download_links %}
+        <div class="container mt-5">
+            <div class="card card-custom-shadow">
+              <div class="card-body">
+                <h5 class="card-title">Card with Dropdown</h5>
+                <p class="card-text">This is an example of a card with a custom shadow and a dropdown menu.</p>
+        
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                {% endfor %}
     </div>
 </div>
+ <!-- Bootstrap Bundle with Popper -->
