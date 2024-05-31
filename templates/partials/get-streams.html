@@ -1,27 +1,34 @@
 <div class="container">
-    <div class="streams">
-        <img width="80px" height="80px"  src="{{stream_image}}" alt="image">
-        {% for link in download_links %}
-        <div class="container mt-5">
+    <style>
+        .card-custom-shadow {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+      </style>
+    {% if download_links %}
+    <div class="streams mt-12">
+        <div class="container ">
             <div class="card card-custom-shadow">
               <div class="card-body">
-                <h5 class="card-title">Card with Dropdown</h5>
-                <p class="card-text">This is an example of a card with a custom shadow and a dropdown menu.</p>
-        
-                <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                <div class="heads" style="display: flex; flex-direction: row;">
+                    <img width="80px" height="80px"  src="{{stream_image}}" alt="image">
+                    <h3>{{video_title}}</h3>
                 </div>
-              </div>
+
+                
+            <div class="form-group mt-3">
+                <label for="downloadSelect">Download Links</label>
+                <select class="form-control" id="downloadSelect" onchange="location = this.value;">
+                    <option selected disabled>Select a resolution</option>
+                    {% for link in download_links %}
+                    <option><a class="dropdown-item" download href="{{ link.url }}" >Download {{ link.resolution }} ({{ link.mime_type }})</a></option>
+                {% endfor %}
+                </select>
+            </div>
+ 
+
             </div>
           </div>
-                {% endfor %}
     </div>
+    {% endif %}
 </div>
  <!-- Bootstrap Bundle with Popper -->
