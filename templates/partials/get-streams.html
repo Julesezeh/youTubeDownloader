@@ -4,6 +4,44 @@
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       </style>
+      <script>
+        function downloadVideo(itag, video_id) {
+            console.log(`Attempting to download video with itag: ${itag}, video_id: ${video_id}`);
+            fetch("{% url 'get_download_url' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ itag: itag, video_id: video_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.download_url) {
+                    console.log(`Download URL received: ${data.download_url}`);
+                    const a = document.createElement('a');
+                    a.href = data.download_url;
+                    a.download = '';  // Optional: If you want to force download
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    console.error('Error:', data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        $(document).ready(function() {
+            console.log("Document ready, attaching click handlers.");
+            $(".download-link").on("click", function(event) {
+                event.preventDefault();
+                const itag = $(this).data("itag");
+                const video_id = $(this).data("video-id");
+                downloadVideo(itag, video_id);
+            });
+        });
+    </script>
     {% if download_links %}
     <div class="streams mt-12">
         <div class="container ">
@@ -17,11 +55,11 @@
                 
             <div class="form-group mt-3">
                 <label for="downloadSelect">Download Links</label>
-                <select class="form-control" id="downloadSelect" onchange="location = this.value;">
+                <select class="form-control" id="downloadSelect">
                     <option selected disabled>Select a resolution</option>
                     {% for link in download_links %}
-                    <option><a class="dropdown-item" download href="{{ link.url }}" >Download {{ link.resolution }} ({{ link.mime_type }})</a></option>
-                {% endfor %}
+                        <option class="list-group-item list-group-item-action download-link" >Download {{ link.resolution }} ({{ link.mime_type }})</option>
+                    {% endfor %}
                 </select>
             </div>
  
