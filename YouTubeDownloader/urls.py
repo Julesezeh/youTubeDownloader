@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import index, get_streams
+from .views import index, get_streams,get_download_url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",index,name="home")
+    path("",index,name="home"),
+    path('get_download_url', get_download_url, name='get_download_url')
 
 ]
 
